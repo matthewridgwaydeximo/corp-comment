@@ -1,11 +1,11 @@
-import { Pattern, Logo, PageHeading, FeedbackForm } from "../../../lib/home.imports";
+import { Pattern, Logo, Title, FeedbackForm } from "../../../lib/common.imports";
 
 export default function Header() {
     return (
         <header>
             <Pattern />
             <Logo />
-            <PageHeading />
+            <Title />
             <FeedbackForm />
         </header>
     );

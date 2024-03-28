@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* RESET */
 *,
@@ -23,13 +25,13 @@ textarea {
     font: inherit;
     border: initial;
     resize: none;
-    outline: initial; /* create alternative for focus state */
+    outline: initial;
 }
 
 button {
     font: inherit;
     border: initial;
-    outline: initial; /* create alternative for focus state */
+    outline: initial;
     background-color: initial;
 }
 
@@ -79,8 +81,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
 }
 
 .body::-webkit-scrollbar {
@@ -307,9 +308,8 @@ form button span::selection {
     overflow-x: hidden;
     background-color: #f3f6f8;
     background-color: #f7f8f9;
-
-    scrollbar-color: #979ca0 #dbdfe4; /* Firefox */
-    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #979ca0 #dbdfe4;
+    scrollbar-width: thin;
 }
 
 .feedback-list::-webkit-scrollbar {
