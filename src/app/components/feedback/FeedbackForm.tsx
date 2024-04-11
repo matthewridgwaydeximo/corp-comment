@@ -9,6 +9,10 @@ export default function FeedbackForm() {
     const length = MAX_CHARACTERS - text.length;
 
     const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        const length = e.target.value.length;
+
+        if (length > MAX_CHARACTERS) return;
+
         setText(e.target.value);
     };
 
