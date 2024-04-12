@@ -1,15 +1,39 @@
 import { TriangleUpIcon } from "@radix-ui/react-icons";
+import { TFeedbackListItem } from "../../../lib/types/types";
 
-export default function FeedbackList() {
+type TProps = {
+    items: TFeedbackListItem[];
+};
+
+export default function FeedbackList({ items }: TProps) {
     return (
         <ol className="feedback-list">
-            <li className="feedback">
-                <UpVoteButton />
-                <CompanyInitials />
-                <CompanyComments />
-                <PostDetails />
-            </li>
+            {items.map((item, index) => (
+                <FeedbackListItem key={index} {...item} />
+            ))}
         </ol>
+    );
+}
+
+function FeedbackListItem({ upvotes, initials, company, comments, date }: TFeedbackListItem) {
+    return (
+        <li className="feedback">
+            <button>
+                <TriangleUpIcon />
+                <span>{upvotes}</span>
+            </button>
+
+            <div>
+                <p>{initials}</p>
+            </div>
+
+            <div>
+                <p>{company}</p>
+                <p>{comments}</p>
+            </div>
+
+            <p>{date}</p>
+        </li>
     );
 }
 
