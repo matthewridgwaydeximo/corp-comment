@@ -1,44 +1,74 @@
 import { TriangleUpIcon } from "@radix-ui/react-icons";
+import { TFeedbackListItem } from "../../../lib/types/types";
 
-export default function FeedbackList() {
+type TProps = {
+    items: TFeedbackListItem[];
+};
+
+type TUpVoteButtonProps = {
+    upvotes: number;
+};
+
+type TCompanyInitialsProps = {
+    initials: string;
+};
+
+type TCompanyCommentsProps = {
+    company: string;
+    comments: string;
+};
+
+type TDatePosted = {
+    date: string;
+};
+
+export default function FeedbackList({ items }: TProps) {
     return (
         <ol className="feedback-list">
-            <li className="feedback">
-                <UpVoteButton />
-                <CompanyInitials />
-                <CompanyComments />
-                <PostDetails />
-            </li>
+            {items.map((item, index) => (
+                <FeedbackListItem key={index} {...item} />
+            ))}
         </ol>
     );
 }
 
-function UpVoteButton() {
+function FeedbackListItem({ upvotes, initials, company, comments, date }: TFeedbackListItem) {
+    return (
+        <li className="feedback">
+            <UpVoteButton upvotes={upvotes} />
+            <CompanyInitials initials={initials} />
+            <CompanyComments company={company} comments={comments} />
+            <DatePosted date={date} />
+        </li>
+    );
+}
+
+function UpVoteButton({ upvotes }: TUpVoteButtonProps) {
     return (
         <button>
             <TriangleUpIcon />
-            <span>593</span>
+            <span>{upvotes}</span>
         </button>
     );
 }
 
-function CompanyInitials() {
+function CompanyInitials({ initials }: TCompanyInitialsProps) {
     return (
         <div>
-            <p>B</p>
+            <p>{initials}</p>
         </div>
     );
 }
 
-function CompanyComments() {
+function CompanyComments({ company, comments }: TCompanyCommentsProps) {
     return (
         <div>
-            <p>ByteGrad</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, harum?</p>
+            <p>{company}</p>
+            <p>{comments}</p>
         </div>
     );
 }
 
-function PostDetails() {
-    return <p>4d</p>;
+function DatePosted({ date }: TDatePosted) {
+    return <p>{date}</p>;
 }
