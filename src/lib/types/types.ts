@@ -1,7 +1,7 @@
 export type TFeedbackListItem = {
-    upvotes: number;
-    initials: string;
+    upvoteCount: number;
+    badgeLetter: string;
     company: string;
-    comments: string;
-    date: string;
+    text: string;
+    daysAgo: number;
 };

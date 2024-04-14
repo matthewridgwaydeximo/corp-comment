@@ -74,5 +74,5 @@ function CompanyComments({ company, text }: TCompanyCommentsProps) {
 }
 
 function DatePosted({ daysAgo }: TDatePosted) {
-    return <p>{daysAgo}</p>;
+    return <p>{daysAgo}d</p>;
 }
