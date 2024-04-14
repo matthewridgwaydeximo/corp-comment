@@ -1,74 +1,78 @@
 import { TriangleUpIcon } from "@radix-ui/react-icons";
 import { TFeedbackListItem } from "../../../lib/types/types";
+import Spinner from "../common/Spinner";
 
 type TProps = {
-    items: TFeedbackListItem[];
+    items: TFeedbackListItem[] | null;
+    isLoading: boolean;
 };
 
 type TUpVoteButtonProps = {
-    upvotes: number;
+    upvoteCount: number;
 };
 
 type TCompanyInitialsProps = {
-    initials: string;
+    badgeLetter: string;
 };
 
 type TCompanyCommentsProps = {
     company: string;
-    comments: string;
+    text: string;
 };
 
 type TDatePosted = {
-    date: string;
+    daysAgo: number;
 };
 
-export default function FeedbackList({ items }: TProps) {
+export default function FeedbackList({ items, isLoading }: TProps) {
     return (
         <ol className="feedback-list">
-            {items.map((item, index) => (
+            {isLoading && <Spinner />}
+
+            {items?.map((item, index) => (
                 <FeedbackListItem key={index} {...item} />
             ))}
         </ol>
     );
 }
 
-function FeedbackListItem({ upvotes, initials, company, comments, date }: TFeedbackListItem) {
+function FeedbackListItem({ upvoteCount, badgeLetter, company, text, daysAgo }: TFeedbackListItem) {
     return (
         <li className="feedback">
-            <UpVoteButton upvotes={upvotes} />
-            <CompanyInitials initials={initials} />
-            <CompanyComments company={company} comments={comments} />
-            <DatePosted date={date} />
+            <UpVoteButton upvoteCount={upvoteCount} />
+            <CompanyInitials badgeLetter={badgeLetter} />
+            <CompanyComments company={company} text={text} />
+            <DatePosted daysAgo={daysAgo} />
         </li>
     );
 }
 
-function UpVoteButton({ upvotes }: TUpVoteButtonProps) {
+function UpVoteButton({ upvoteCount }: TUpVoteButtonProps) {
     return (
         <button>
             <TriangleUpIcon />
-            <span>{upvotes}</span>
+            <span>{upvoteCount}</span>
         </button>
     );
 }
 
-function CompanyInitials({ initials }: TCompanyInitialsProps) {
+function CompanyInitials({ badgeLetter }: TCompanyInitialsProps) {
     return (
         <div>
-            <p>{initials}</p>
+            <p>{badgeLetter}</p>
         </div>
     );
 }
 
-function CompanyComments({ company, comments }: TCompanyCommentsProps) {
+function CompanyComments({ company, text }: TCompanyCommentsProps) {
     return (
         <div>
             <p>{company}</p>
-            <p>{comments}</p>
+            <p>{text}</p>
         </div>
     );
 }
 
-function DatePosted({ date }: TDatePosted) {
-    return <p>{date}</p>;
+function DatePosted({ daysAgo }: TDatePosted) {
+    return <p>{daysAgo}</p>;
 }
