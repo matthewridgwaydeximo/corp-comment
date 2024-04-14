@@ -16,8 +16,12 @@ export default function FeedbackForm() {
         setText(e.target.value);
     };
 
+    const handleOnSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+        e.preventDefault();
+    };
+
     return (
-        <form className="form">
+        <form className="form" onSubmit={handleOnSubmit}>
             <textarea id="feedback-textarea" placeholder="#" spellCheck={false} value={text} onChange={handleTextChange} />
             <label htmlFor="feedback-textarea">Enter your feedback here, remember to #hashtag the company</label>
             <div>
