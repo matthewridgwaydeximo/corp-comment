@@ -1,10 +1,13 @@
 import { TriangleUpIcon } from "@radix-ui/react-icons";
 import { TFeedbackListItem } from "../../../lib/types/types";
 import Spinner from "../common/Spinner";
+import Error from "../common/Error";
+import IsNullOrEmpty from "@/lib/helper/helper";
 
 type TProps = {
     items: TFeedbackListItem[] | null;
     isLoading: boolean;
+    errorMessage: string;
 };
 
 type TUpVoteButtonProps = {
@@ -24,10 +27,12 @@ type TDatePosted = {
     daysAgo: number;
 };
 
-export default function FeedbackList({ items, isLoading }: TProps) {
+export default function FeedbackList({ items, isLoading, errorMessage }: TProps) {
     return (
         <ol className="feedback-list">
             {isLoading && <Spinner />}
+
+            {IsNullOrEmpty(items) && !IsNullOrEmpty(errorMessage) && <Error message={errorMessage} />}
 
             {items?.map((item, index) => (
                 <FeedbackListItem key={index} {...item} />
