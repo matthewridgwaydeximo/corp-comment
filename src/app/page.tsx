@@ -15,13 +15,12 @@ export default function Home() {
     useEffect(() => {
         async function _fetch() {
             try {
-                const response = await axios.get("https://bytegradX.com/course-assets/projects/corpcomment/api/feedbacks/");
+                const response = await axios.get("https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks/");
                 const { feedbacks } = response.data;
 
                 setItems(feedbacks);
                 setIsLoading(false);
             } catch (error) {
-                console.log(error);
                 setItems(null);
                 setIsLoading(false);
                 setErrorMessage(ERROR_MESSAGE);
