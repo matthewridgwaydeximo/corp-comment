@@ -1,12 +1,20 @@
+import { TFeedbackListItem } from "@/lib/types/types";
 import { Pattern, Logo, Title, FeedbackForm } from "../../../lib/common.imports";
+import { text } from "stream/consumers";
 
-export default function Header() {
+type THeader = {
+    text: string;
+    setText: (text: string) => void;
+    onAddItem: () => void;
+};
+
+export default function Header({ text, setText, onAddItem }: THeader) {
     return (
         <header>
             <Pattern />
             <Logo />
             <Title />
-            <FeedbackForm />
+            <FeedbackForm text={text} setText={setText} handleAddItem={onAddItem} />
         </header>
     );
 }

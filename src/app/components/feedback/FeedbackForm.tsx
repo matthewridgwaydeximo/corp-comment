@@ -2,9 +2,16 @@
 
 import { useState, ChangeEvent } from "react";
 import { MAX_CHARACTERS } from "../../../lib/constants/constants";
+import { TFeedbackListItem } from "@/lib/types/types";
 
-export default function FeedbackForm() {
-    const [text, setText] = useState("");
+type TFeedbackForm = {
+    text: string;
+    setText: (text: string) => void;
+    handleAddItem: () => void;
+};
+
+export default function FeedbackForm({ text, setText, handleAddItem }: TFeedbackForm) {
+    // const [text, setText] = useState("");
 
     const length = MAX_CHARACTERS - text.length;
 
@@ -18,6 +25,18 @@ export default function FeedbackForm() {
 
     const handleOnSubmit = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
+        handleAddItem();
+
+        // const newItem = {
+        //     upvoteCount: 0,
+        //     badgeLetter: "M",
+        //     company: "Matthew Company",
+        //     text: text,
+        //     daysAgo: 5,
+        // };
+
+        // setItems((prevItems: any) => [newItem, ...prevItems]);
+        // setText("");
     };
 
     return (
