@@ -6,9 +6,32 @@ import { Header } from "../lib/home.imports";
 import { TFeedbackListItem } from "../lib/types/types";
 import axios from "axios";
 import { ERROR_MESSAGE } from "../lib/constants/constants";
+import IsNullOrEmpty from "@/lib/helper/helper";
+
+type TOnTextChange = {
+    handleCompanyBadge: (text: string) => string;
+    handleCompanyName: (text: string) => string;
+    handleCompanyDescription: (text: string) => string;
+};
+
+const onTextChange: TOnTextChange = {
+    handleCompanyBadge: (text: string): string => text.split("")[0].toUpperCase(),
+    handleCompanyName: (text: string): string =>
+        text
+            .split(" ")
+            .filter((word) => word.includes("#"))
+            .map((word) => word.replace("#", ""))
+            .join(" "),
+    handleCompanyDescription: (text: string): string =>
+        text
+            .split(" ")
+            .filter((word) => !word.includes("#"))
+            .join(" "),
+};
 
 export default function Home() {
     const [items, setItems] = useState<TFeedbackListItem[] | null>(null);
+    const [text, setText] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -30,9 +53,27 @@ export default function Home() {
         _fetch();
     }, []);
 
+    const handleAddItem = () => {
+        if (IsNullOrEmpty(text)) return;
+
+        const { handleCompanyBadge, handleCompanyName, handleCompanyDescription } = onTextChange;
+
+        const newItem: TFeedbackListItem = {
+            id: new Date().getTime(),
+            upvoteCount: 0,
+            badgeLetter: handleCompanyBadge(text),
+            company: handleCompanyName(text),
+            text: handleCompanyDescription(text),
+            daysAgo: 5,
+        };
+
+        setItems((prevItems: any) => [newItem, ...prevItems]);
+        setText("");
+    };
+
     return (
         <>
-            <Header />
+            <Header text={text} setText={setText} onAddItem={handleAddItem} />
             <FeedbackList items={items} isLoading={isLoading} errorMessage={errorMessage} />
         </>
     );
