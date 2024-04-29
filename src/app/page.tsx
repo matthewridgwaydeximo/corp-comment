@@ -7,6 +7,27 @@ import { TFeedbackListItem } from "../lib/types/types";
 import axios from "axios";
 import { ERROR_MESSAGE } from "../lib/constants/constants";
 
+type TOnTextChange = {
+    handleCompanyBadge: (text: string) => string;
+    handleCompanyName: (text: string) => string;
+    handleCompanyDescription: (text: string) => string;
+};
+
+const onTextChange: TOnTextChange = {
+    handleCompanyBadge: (text: string): string => text.split("")[0].toUpperCase(),
+    handleCompanyName: (text: string): string =>
+        text
+            .split(" ")
+            .filter((word) => word.includes("#"))
+            .map((word) => word.replace("#", ""))
+            .join(" "),
+    handleCompanyDescription: (text: string): string =>
+        text
+            .split(" ")
+            .filter((word) => !word.includes("#"))
+            .join(" "),
+};
+
 export default function Home() {
     const [items, setItems] = useState<TFeedbackListItem[] | null>(null);
     const [text, setText] = useState("");
@@ -34,35 +55,18 @@ export default function Home() {
     const handleAddItem = () => {
         if (!text) return;
 
+        const { handleCompanyBadge, handleCompanyName, handleCompanyDescription } = onTextChange;
+
         const newItem: TFeedbackListItem = {
             upvoteCount: 0,
-            badgeLetter: _handleCompanyInitials(text),
-            company: _handleCompanyName(text),
-            text: _handleCompanyDescription(text),
+            badgeLetter: handleCompanyBadge(text),
+            company: handleCompanyName(text),
+            text: handleCompanyDescription(text),
             daysAgo: 5,
         };
 
         setItems((prevItems: any) => [newItem, ...prevItems]);
         setText("");
-
-        function _handleCompanyInitials(text: string): string {
-            return text.split("")[0].toUpperCase();
-        }
-
-        function _handleCompanyName(text: string): string {
-            return text
-                .split(" ")
-                .filter((word) => word.includes("#"))
-                .map((word) => word.replace("#", ""))
-                .join(" ");
-        }
-
-        function _handleCompanyDescription(text: string): string {
-            return text
-                .split(" ")
-                .filter((word) => !word.includes("#"))
-                .join(" ");
-        }
     };
 
     return (
