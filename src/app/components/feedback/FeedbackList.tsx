@@ -19,8 +19,8 @@ type TCompanyInitialsProps = {
 };
 
 type TCompanyCommentsProps = {
-    company: string;
-    text: string;
+    company: string | null;
+    text: string | null;
 };
 
 type TDatePosted = {
@@ -34,8 +34,8 @@ export default function FeedbackList({ items, isLoading, errorMessage }: TProps)
 
             {IsNullOrEmpty(items) && !IsNullOrEmpty(errorMessage) && <Error message={errorMessage} />}
 
-            {items?.map((item, index) => (
-                <FeedbackListItem key={index} {...item} />
+            {items?.map((item) => (
+                <FeedbackListItem key={item.id} {...item} />
             ))}
         </ol>
     );

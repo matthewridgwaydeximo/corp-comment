@@ -26,17 +26,6 @@ export default function FeedbackForm({ text, setText, handleAddItem }: TFeedback
     const handleOnSubmit = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         handleAddItem();
-
-        // const newItem = {
-        //     upvoteCount: 0,
-        //     badgeLetter: "M",
-        //     company: "Matthew Company",
-        //     text: text,
-        //     daysAgo: 5,
-        // };
-
-        // setItems((prevItems: any) => [newItem, ...prevItems]);
-        // setText("");
     };
 
     return (

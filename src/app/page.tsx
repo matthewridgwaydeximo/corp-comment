@@ -6,6 +6,7 @@ import { Header } from "../lib/home.imports";
 import { TFeedbackListItem } from "../lib/types/types";
 import axios from "axios";
 import { ERROR_MESSAGE } from "../lib/constants/constants";
+import IsNullOrEmpty from "@/lib/helper/helper";
 
 type TOnTextChange = {
     handleCompanyBadge: (text: string) => string;
@@ -53,11 +54,12 @@ export default function Home() {
     }, []);
 
     const handleAddItem = () => {
-        if (!text) return;
+        if (IsNullOrEmpty(text)) return;
 
         const { handleCompanyBadge, handleCompanyName, handleCompanyDescription } = onTextChange;
 
         const newItem: TFeedbackListItem = {
+            id: new Date().getTime(),
             upvoteCount: 0,
             badgeLetter: handleCompanyBadge(text),
             company: handleCompanyName(text),
