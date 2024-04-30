@@ -14,7 +14,12 @@ type TOnTextChange = {
 };
 
 const onTextChange: TOnTextChange = {
-    handleCompanyBadge: (text: string): string => text.split("")[0].toUpperCase(),
+    handleCompanyBadge: (text: string): string =>
+        text
+            .split(" ")
+            .filter((word) => word.includes("#"))
+            .map((word) => word.replace("#", "").charAt(0))
+            .join(" "),
     handleCompanyName: (text: string): string =>
         text
             .split(" ")
