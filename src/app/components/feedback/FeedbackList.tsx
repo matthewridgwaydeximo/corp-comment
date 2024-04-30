@@ -3,6 +3,7 @@ import { TFeedbackListItem } from "../../../lib/types/types";
 import Spinner from "../common/Spinner";
 import Error from "../common/Error";
 import IsNullOrEmpty from "@/lib/helper/helper";
+import { JUST_NOW_MESSAGE } from "@/lib/constants/constants";
 
 type TProps = {
     items: TFeedbackListItem[] | null;
@@ -79,5 +80,5 @@ function CompanyComments({ company, text }: TCompanyCommentsProps) {
 }
 
 function DatePosted({ daysAgo }: TDatePosted) {
-    return <p>{daysAgo}d</p>;
+    return <p>{IsNullOrEmpty(daysAgo) ? JUST_NOW_MESSAGE : `${daysAgo}d`}</p>;
 }
