@@ -11,7 +11,6 @@ import IsNullOrEmpty from "@/lib/helper/helper";
 type TOnTextChange = {
     handleCompanyBadge: (text: string) => string;
     handleCompanyName: (text: string) => string;
-    handleCompanyDescription: (text: string) => string;
 };
 
 const onTextChange: TOnTextChange = {
@@ -21,11 +20,6 @@ const onTextChange: TOnTextChange = {
             .split(" ")
             .filter((word) => word.includes("#"))
             .map((word) => word.replace("#", ""))
-            .join(" "),
-    handleCompanyDescription: (text: string): string =>
-        text
-            .split(" ")
-            .filter((word) => !word.includes("#"))
             .join(" "),
 };
 
@@ -53,22 +47,28 @@ export default function Home() {
         _fetch();
     }, []);
 
-    const handleAddItem = () => {
+    const handleAddItem = async () => {
         if (IsNullOrEmpty(text)) return;
 
-        const { handleCompanyBadge, handleCompanyName, handleCompanyDescription } = onTextChange;
+        const { handleCompanyBadge, handleCompanyName } = onTextChange;
 
         const newItem: TFeedbackListItem = {
             id: new Date().getTime(),
             upvoteCount: 0,
             badgeLetter: handleCompanyBadge(text),
             company: handleCompanyName(text),
-            text: handleCompanyDescription(text),
-            daysAgo: 5,
+            text: text,
+            daysAgo: 0,
         };
 
-        setItems((prevItems: any) => [newItem, ...prevItems]);
+        setItems((prevItems: any) => [...prevItems, newItem]);
         setText("");
+
+        await axios.post("https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks/", {
+            ...newItem,
+        });
+
+        alert("Successfully added new feedback item");
     };
 
     return (
