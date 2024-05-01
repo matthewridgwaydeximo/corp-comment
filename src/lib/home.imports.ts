@@ -1,3 +1,3 @@
-import Header from "../app/components/header/Header";
+import Header from "../app/components/layout/Header";
 
 export { Header };
