@@ -7,6 +7,7 @@ import { TFeedbackListItem } from "../lib/types/types";
 import axios from "axios";
 import { ERROR_MESSAGE } from "../lib/constants/constants";
 import IsNullOrEmpty from "@/lib/helper/helper";
+import { HashtagList } from "../lib/common.imports";
 
 type TOnTextChange = {
     handleCompanyBadge: (text: string) => string;
@@ -80,6 +81,7 @@ export default function Home() {
         <>
             <Header text={text} setText={setText} onAddItem={handleAddItem} />
             <FeedbackList items={items} isLoading={isLoading} errorMessage={errorMessage} />
+            <HashtagList />
         </>
     );
 }
