@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { FeedbackList } from "../lib/feedback.imports";
-import { Header } from "../lib/home.imports";
+import { Header } from "../lib/layout.imports";
 import { TFeedbackListItem } from "../lib/types/types";
 import axios from "axios";
 import { ERROR_MESSAGE } from "../lib/constants/constants";
-import IsNullOrEmpty from "@/lib/helper/helper";
+import IsNullOrEmpty from "../lib/helper/helper";
+import { HashtagList } from "../lib/hashtag.imports";
 
 type TOnTextChange = {
     handleCompanyBadge: (text: string) => string;
@@ -29,15 +30,32 @@ const onTextChange: TOnTextChange = {
 };
 
 export default function Home() {
-    const [items, setItems] = useState<TFeedbackListItem[] | null>(null);
+    const [items, setItems] = useState<TFeedbackListItem[] | null | undefined>(null);
     const [text, setText] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
+    const [selectedCompany, setSelectedCompany] = useState("");
+
+    console.log(items);
+
+    const hashtagListItems =
+        items
+            ?.map((item) => item.company)
+            .filter((company, index, array) => array.indexOf(company) === index) || [];
+
+    const filteredItems = !IsNullOrEmpty(selectedCompany)
+        ? items?.filter((item) => item.company === selectedCompany)
+        : items;
+
+    console.log(filteredItems);
 
     useEffect(() => {
         async function _fetch() {
             try {
-                const response = await axios.get("https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks/");
+                const response = await axios.get(
+                    "https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks/"
+                );
+
                 const { feedbacks } = response.data;
 
                 setItems(feedbacks);
@@ -76,10 +94,18 @@ export default function Home() {
         alert("Successfully added new feedback item");
     };
 
+    const handleSelectCompany = (company: string) => {
+        setSelectedCompany(company);
+    };
+
     return (
         <>
             <Header text={text} setText={setText} onAddItem={handleAddItem} />
-            <FeedbackList items={items} isLoading={isLoading} errorMessage={errorMessage} />
+            <FeedbackList items={filteredItems} isLoading={isLoading} errorMessage={errorMessage} />
+            <HashtagList
+                hashtagListItems={hashtagListItems}
+                handleSelectCompany={handleSelectCompany}
+            />
         </>
     );
 }

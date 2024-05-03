@@ -1,9 +1,7 @@
-import Container from "../app/components/common/Container";
-import Footer from "../app/components/common/Footer";
-import HashtagList from "../app/components/common/HashtagList";
-import Pattern from "../app/components/common/Pattern";
+import Error from "../app/components/common/Error";
 import Logo from "../app/components/common/Logo";
+import Pattern from "../app/components/common/Pattern";
+import Spinner from "../app/components/common/Spinner";
 import Title from "../app/components/common/Title";
-import FeedbackForm from "../app/components/feedback/FeedbackForm";
 
-export { Container, Footer, HashtagList, Pattern, Logo, Title, FeedbackForm };
+export { Error, Logo, Pattern, Spinner, Title };

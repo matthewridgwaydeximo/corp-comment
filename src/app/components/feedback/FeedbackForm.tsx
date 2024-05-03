@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 import { MAX_CHARACTERS } from "../../../lib/constants/constants";
-import { TFeedbackListItem } from "@/lib/types/types";
 
 type TFeedbackForm = {
     text: string;
@@ -11,8 +10,6 @@ type TFeedbackForm = {
 };
 
 export default function FeedbackForm({ text, setText, handleAddItem }: TFeedbackForm) {
-    // const [text, setText] = useState("");
-
     const length = MAX_CHARACTERS - text.length;
 
     const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -30,8 +27,16 @@ export default function FeedbackForm({ text, setText, handleAddItem }: TFeedback
 
     return (
         <form className="form" onSubmit={handleOnSubmit}>
-            <textarea id="feedback-textarea" placeholder="#" spellCheck={false} value={text} onChange={handleTextChange} />
-            <label htmlFor="feedback-textarea">Enter your feedback here, remember to #hashtag the company</label>
+            <textarea
+                id="feedback-textarea"
+                placeholder="#"
+                spellCheck={false}
+                value={text}
+                onChange={handleTextChange}
+            />
+            <label htmlFor="feedback-textarea">
+                Enter your feedback here, remember to #hashtag the company
+            </label>
             <div>
                 <p className="u-italic">{length}</p>
                 <button>

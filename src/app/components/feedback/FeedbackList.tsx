@@ -1,12 +1,11 @@
 import { TriangleUpIcon } from "@radix-ui/react-icons";
 import { TFeedbackListItem } from "../../../lib/types/types";
-import Spinner from "../common/Spinner";
-import Error from "../common/Error";
-import IsNullOrEmpty from "@/lib/helper/helper";
-import { JUST_NOW_MESSAGE } from "@/lib/constants/constants";
+import { Error, Spinner } from "../../../lib/common.imports";
+import IsNullOrEmpty from "../../../lib/helper/helper";
+import { JUST_NOW_MESSAGE } from "../../../lib/constants/constants";
 
 type TProps = {
-    items: TFeedbackListItem[] | null;
+    items: TFeedbackListItem[] | null | undefined;
     isLoading: boolean;
     errorMessage: string;
 };
@@ -33,7 +32,9 @@ export default function FeedbackList({ items, isLoading, errorMessage }: TProps)
         <ol className="feedback-list">
             {isLoading && <Spinner />}
 
-            {IsNullOrEmpty(items) && !IsNullOrEmpty(errorMessage) && <Error message={errorMessage} />}
+            {IsNullOrEmpty(items) && !IsNullOrEmpty(errorMessage) && (
+                <Error message={errorMessage} />
+            )}
 
             {items?.map((item) => (
                 <FeedbackListItem key={item.id} {...item} />
