@@ -5,7 +5,7 @@ import IsNullOrEmpty from "../../../lib/helper/helper";
 import { JUST_NOW_MESSAGE } from "../../../lib/constants/constants";
 
 type TProps = {
-    items: TFeedbackListItem[] | null;
+    items: TFeedbackListItem[] | null | undefined;
     isLoading: boolean;
     errorMessage: string;
 };

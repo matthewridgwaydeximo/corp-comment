@@ -30,15 +30,24 @@ const onTextChange: TOnTextChange = {
 };
 
 export default function Home() {
-    const [items, setItems] = useState<TFeedbackListItem[] | null>(null);
+    const [items, setItems] = useState<TFeedbackListItem[] | null | undefined>(null);
     const [text, setText] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
+    const [selectedCompany, setSelectedCompany] = useState("");
+
+    console.log(items);
 
     const hashtagListItems =
         items
             ?.map((item) => item.company)
             .filter((company, index, array) => array.indexOf(company) === index) || [];
+
+    const filteredItems = !IsNullOrEmpty(selectedCompany)
+        ? items?.filter((item) => item.company === selectedCompany)
+        : items;
+
+    console.log(filteredItems);
 
     useEffect(() => {
         async function _fetch() {
@@ -85,11 +94,18 @@ export default function Home() {
         alert("Successfully added new feedback item");
     };
 
+    const handleSelectCompany = (company: string) => {
+        setSelectedCompany(company);
+    };
+
     return (
         <>
             <Header text={text} setText={setText} onAddItem={handleAddItem} />
-            <FeedbackList items={items} isLoading={isLoading} errorMessage={errorMessage} />
-            <HashtagList hashtagListItems={hashtagListItems} />
+            <FeedbackList items={filteredItems} isLoading={isLoading} errorMessage={errorMessage} />
+            <HashtagList
+                hashtagListItems={hashtagListItems}
+                handleSelectCompany={handleSelectCompany}
+            />
         </>
     );
 }

@@ -1,17 +1,15 @@
 import React from "react";
 
 type THashtagListProps = {
-    hashtagListItems: string[];
+    key: number;
+    company: string;
+    onSelectCompany: (company: string) => void;
 };
 
-export default function HashtagListItem({ hashtagListItems }: THashtagListProps) {
+export default function HashtagListItem({ key, company, onSelectCompany }: THashtagListProps) {
     return (
-        <>
-            {hashtagListItems.map((item) => (
-                <li key={item}>
-                    <button>#{item}</button>
-                </li>
-            ))}
-        </>
+        <li key={key}>
+            <button onClick={() => onSelectCompany(company)}>#{company}</button>
+        </li>
     );
 }
