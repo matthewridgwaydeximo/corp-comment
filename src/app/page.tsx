@@ -35,6 +35,8 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
 
+    const hashtagListItems = items?.map((item) => item.company).filter((company, index, array) => array.indexOf(company) === index);
+
     useEffect(() => {
         async function _fetch() {
             try {
@@ -81,7 +83,7 @@ export default function Home() {
         <>
             <Header text={text} setText={setText} onAddItem={handleAddItem} />
             <FeedbackList items={items} isLoading={isLoading} errorMessage={errorMessage} />
-            <HashtagList />
+            <HashtagList hashtagListItems={hashtagListItems} />
         </>
     );
 }

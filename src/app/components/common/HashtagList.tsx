@@ -1,9 +1,15 @@
-export default function HashtagList() {
+type THashtagListProps = {
+    hashtagListItems: string[];
+};
+
+export default function HashtagList({ hashtagListItems }: THashtagListProps) {
     return (
         <ul className="hashtags">
-            <li>
-                <button>#Starbucks</button>
-            </li>
+            {hashtagListItems.map((item) => (
+                <li key={item}>
+                    <button>#{item}</button>
+                </li>
+            ))}
         </ul>
     );
 }
