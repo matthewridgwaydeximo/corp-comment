@@ -1,3 +1,5 @@
+import { HashtagListItem } from "../../../lib/hashtag.imports";
+
 type THashtagListProps = {
     hashtagListItems: string[];
 };
@@ -5,11 +7,7 @@ type THashtagListProps = {
 export default function HashtagList({ hashtagListItems }: THashtagListProps) {
     return (
         <ul className="hashtags">
-            {hashtagListItems.map((item) => (
-                <li key={item}>
-                    <button>#{item}</button>
-                </li>
-            ))}
+            <HashtagListItem hashtagListItems={hashtagListItems} />
         </ul>
     );
 }

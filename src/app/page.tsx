@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { FeedbackList } from "../lib/feedback.imports";
-import { Header } from "../lib/home.imports";
+import { Header } from "../lib/layout.imports";
 import { TFeedbackListItem } from "../lib/types/types";
 import axios from "axios";
 import { ERROR_MESSAGE } from "../lib/constants/constants";
-import IsNullOrEmpty from "@/lib/helper/helper";
-import { HashtagList } from "../lib/common.imports";
+import IsNullOrEmpty from "../lib/helper/helper";
+import { HashtagList } from "../lib/hashtag.imports";
 
 type TOnTextChange = {
     handleCompanyBadge: (text: string) => string;
@@ -35,12 +35,18 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const hashtagListItems = items?.map((item) => item.company).filter((company, index, array) => array.indexOf(company) === index);
+    const hashtagListItems =
+        items
+            ?.map((item) => item.company)
+            .filter((company, index, array) => array.indexOf(company) === index) || [];
 
     useEffect(() => {
         async function _fetch() {
             try {
-                const response = await axios.get("https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks/");
+                const response = await axios.get(
+                    "https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks/"
+                );
+
                 const { feedbacks } = response.data;
 
                 setItems(feedbacks);

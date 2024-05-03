@@ -1,6 +1,5 @@
-import { TFeedbackListItem } from "@/lib/types/types";
-import { Pattern, Logo, Title, FeedbackForm } from "../../../lib/common.imports";
-import { text } from "stream/consumers";
+import { Pattern, Logo, Title } from "../../../lib/common.imports";
+import { FeedbackForm } from "../../../lib/feedback.imports";
 
 type THeader = {
     text: string;
