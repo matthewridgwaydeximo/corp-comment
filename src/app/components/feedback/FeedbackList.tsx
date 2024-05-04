@@ -1,8 +1,12 @@
+"use client";
+
 import { TriangleUpIcon } from "@radix-ui/react-icons";
 import { TFeedbackListItem } from "../../../lib/types/types";
 import { Error, Spinner } from "../../../lib/common.imports";
 import IsNullOrEmpty from "../../../lib/helper/helper";
 import { JUST_NOW_MESSAGE } from "../../../lib/constants/constants";
+import classNames from "classnames";
+import { useState } from "react";
 
 type TProps = {
     items: TFeedbackListItem[] | null | undefined;
@@ -44,8 +48,17 @@ export default function FeedbackList({ items, isLoading, errorMessage }: TProps)
 }
 
 function FeedbackListItem({ upvoteCount, badgeLetter, company, text, daysAgo }: TFeedbackListItem) {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const className = classNames({
+        feedback: true,
+        "feedback--expand": isExpanded,
+    });
+
+    const handleExpand = () => setIsExpanded(!isExpanded);
+
     return (
-        <li className="feedback">
+        <li className={className} onClick={handleExpand}>
             <UpVoteButton upvoteCount={upvoteCount} />
             <CompanyInitials badgeLetter={badgeLetter} />
             <CompanyComments company={company} text={text} />
