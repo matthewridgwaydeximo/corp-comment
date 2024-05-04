@@ -68,10 +68,18 @@ function FeedbackListItem({ upvoteCount, badgeLetter, company, text, daysAgo }: 
 }
 
 function UpVoteButton({ upvoteCount }: TUpVoteButtonProps) {
+    const [updatedUpvoteCount, setUpdatedUpvoteCount] = useState(upvoteCount);
+
     return (
-        <button>
+        <button
+            onClick={(e) => {
+                e.stopPropagation();
+                setUpdatedUpvoteCount(() => updatedUpvoteCount + 1);
+                e.currentTarget.disabled = true;
+            }}
+        >
             <TriangleUpIcon />
-            <span>{upvoteCount}</span>
+            <span>{updatedUpvoteCount}</span>
         </button>
     );
 }
