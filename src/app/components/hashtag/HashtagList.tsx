@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { HashtagListItem } from "../../../lib/hashtag.imports";
 
 type THashtagListProps = {
@@ -9,11 +10,13 @@ export default function HashtagList({ hashtagListItems, handleSelectCompany }: T
     return (
         <ul className="hashtags">
             {hashtagListItems.map((hashtagListItem, index) => (
-                <HashtagListItem
-                    key={index}
-                    company={hashtagListItem}
-                    onSelectCompany={handleSelectCompany}
-                />
+                <Fragment key={index}>
+                    <HashtagListItem
+                        key={index}
+                        company={hashtagListItem}
+                        onSelectCompany={handleSelectCompany}
+                    />
+                </Fragment>
             ))}
         </ul>
     );

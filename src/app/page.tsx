@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FeedbackList } from "../lib/feedback.imports";
 import { Header } from "../lib/layout.imports";
 import { TFeedbackListItem } from "../lib/types/types";
@@ -36,18 +36,21 @@ export default function Home() {
     const [errorMessage, setErrorMessage] = useState("");
     const [selectedCompany, setSelectedCompany] = useState("");
 
-    console.log(items);
+    const hashtagListItems = useMemo(
+        () =>
+            items
+                ?.map((item) => item.company)
+                .filter((company, index, array) => array.indexOf(company) === index) || [],
+        [items]
+    );
 
-    const hashtagListItems =
-        items
-            ?.map((item) => item.company)
-            .filter((company, index, array) => array.indexOf(company) === index) || [];
-
-    const filteredItems = !IsNullOrEmpty(selectedCompany)
-        ? items?.filter((item) => item.company === selectedCompany)
-        : items;
-
-    console.log(filteredItems);
+    const filteredItems = useMemo(
+        () =>
+            !IsNullOrEmpty(selectedCompany)
+                ? items?.filter((item) => item.company === selectedCompany)
+                : items,
+        [items, selectedCompany]
+    );
 
     useEffect(() => {
         async function _fetch() {
