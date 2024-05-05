@@ -1,7 +1,9 @@
 "use client";
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { MAX_CHARACTERS } from "../../../lib/constants/constants";
+import classNames from "classnames";
+import IsNullOrEmpty from "../../../lib/helper/helper";
 
 type TFeedbackForm = {
     text: string;
@@ -10,6 +12,9 @@ type TFeedbackForm = {
 };
 
 export default function FeedbackForm({ text, setText, handleAddItem }: TFeedbackForm) {
+    const [showValidIndicator, setShowValidIndicator] = useState(false);
+    const [showInvalidIndicator, setShowInvalidIndicator] = useState(false);
+
     const length = MAX_CHARACTERS - text.length;
 
     const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -22,11 +27,32 @@ export default function FeedbackForm({ text, setText, handleAddItem }: TFeedback
 
     const handleOnSubmit = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (IsNullOrEmpty(text) || !text.includes("#")) {
+            setShowInvalidIndicator(true);
+            setTimeout(() => {
+                setShowInvalidIndicator(false);
+            }, 2000);
+            return;
+        }
+
         handleAddItem();
+
+        setShowValidIndicator(true);
+        setTimeout(() => {
+            setShowValidIndicator(false);
+        }, 2000);
     };
 
     return (
-        <form className="form" onSubmit={handleOnSubmit}>
+        <form
+            className={classNames({
+                form: true,
+                "form--valid": showValidIndicator,
+                "form--invalid": showInvalidIndicator,
+            })}
+            onSubmit={handleOnSubmit}
+        >
             <textarea
                 id="feedback-textarea"
                 placeholder="#"
