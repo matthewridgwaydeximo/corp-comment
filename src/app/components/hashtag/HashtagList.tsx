@@ -1,12 +1,11 @@
 import { Fragment } from "react";
 import { HashtagListItem } from "../../../lib/hashtag.imports";
+import { useFeedbackContext } from "../../../lib/hooks/useFeedbackContext";
+import { TFeedback } from "../../../lib/types/types";
 
-type THashtagListProps = {
-    hashtagListItems: string[];
-    handleSelectCompany: (company: string) => void;
-};
+export default function HashtagList() {
+    const { hashtagListItems, handleSelectCompany } = useFeedbackContext() as TFeedback;
 
-export default function HashtagList({ hashtagListItems, handleSelectCompany }: THashtagListProps) {
     return (
         <ul className="hashtags">
             {hashtagListItems.map((hashtagListItem, index) => (

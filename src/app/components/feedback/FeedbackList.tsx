@@ -1,18 +1,13 @@
 "use client";
 
 import { TriangleUpIcon } from "@radix-ui/react-icons";
-import { TFeedbackListItem } from "../../../lib/types/types";
+import { TFeedback, TFeedbackListItem } from "../../../lib/types/types";
 import { Error, Spinner } from "../../../lib/common.imports";
 import IsNullOrEmpty from "../../../lib/helper/helper";
 import { JUST_NOW_MESSAGE } from "../../../lib/constants/constants";
 import classNames from "classnames";
 import { useState } from "react";
-
-type TProps = {
-    items: TFeedbackListItem[] | null | undefined;
-    isLoading: boolean;
-    errorMessage: string;
-};
+import { useFeedbackContext } from "../../../lib/hooks/useFeedbackContext";
 
 type TUpVoteButtonProps = {
     upvoteCount: number;
@@ -31,16 +26,18 @@ type TDatePosted = {
     daysAgo: number;
 };
 
-export default function FeedbackList({ items, isLoading, errorMessage }: TProps) {
+export default function FeedbackList() {
+    const { filteredItems, isLoading, errorMessage } = useFeedbackContext() as TFeedback;
+
     return (
         <ol className="feedback-list">
             {isLoading && <Spinner />}
 
-            {IsNullOrEmpty(items) && !IsNullOrEmpty(errorMessage) && (
+            {IsNullOrEmpty(filteredItems) && !IsNullOrEmpty(errorMessage) && (
                 <Error message={errorMessage} />
             )}
 
-            {items?.map((item) => (
+            {filteredItems?.map((item) => (
                 <FeedbackListItem key={item.id} {...item} />
             ))}
         </ol>
