@@ -50,15 +50,16 @@ export default function FeedbackList({ items, isLoading, errorMessage }: TProps)
 function FeedbackListItem({ upvoteCount, badgeLetter, company, text, daysAgo }: TFeedbackListItem) {
     const [isExpanded, setIsExpanded] = useState(false);
 
-    const className = classNames({
-        feedback: true,
-        "feedback--expand": isExpanded,
-    });
-
     const handleExpand = () => setIsExpanded(!isExpanded);
 
     return (
-        <li className={className} onClick={handleExpand}>
+        <li
+            className={classNames({
+                feedback: true,
+                "feedback--expand": isExpanded,
+            })}
+            onClick={handleExpand}
+        >
             <UpVoteButton upvoteCount={upvoteCount} />
             <CompanyInitials badgeLetter={badgeLetter} />
             <CompanyComments company={company} text={text} />

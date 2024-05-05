@@ -93,8 +93,6 @@ export default function Home() {
         await axios.post("https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks/", {
             ...newItem,
         });
-
-        alert("Successfully added new feedback item");
     };
 
     const handleSelectCompany = (company: string) => {
