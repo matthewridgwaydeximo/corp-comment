@@ -4,7 +4,7 @@ import axios from "axios";
 import { ERROR_MESSAGE } from "../constants/constants";
 
 export const useFetchFeedbackItems = () => {
-    const [items, setItems] = useState<TFeedbackListItem[] | null | undefined>(null);
+    const [items, setItems] = useState<TFeedbackListItem[] | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
 
