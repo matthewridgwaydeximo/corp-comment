@@ -1,10 +1,10 @@
 import { Fragment } from "react";
 import { HashtagListItem } from "../../../lib/hashtag.imports";
-import { useFeedbackContext } from "../../../lib/hooks/useFeedbackContext";
-import { TFeedback } from "../../../lib/types/types";
+import { useFeedbackStore } from "../../../app/stores/feedbackStore";
 
 export default function HashtagList() {
-    const { hashtagListItems, handleSelectCompany } = useFeedbackContext() as TFeedback;
+    const hashtagListItems = useFeedbackStore((state) => state.getHashtagListItems());
+    const selectCompany = useFeedbackStore((state) => state.selectCompany);
 
     return (
         <ul className="hashtags">
@@ -13,7 +13,7 @@ export default function HashtagList() {
                     <HashtagListItem
                         key={index}
                         company={hashtagListItem}
-                        onSelectCompany={handleSelectCompany}
+                        onSelectCompany={selectCompany}
                     />
                 </Fragment>
             ))}

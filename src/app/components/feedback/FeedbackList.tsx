@@ -1,13 +1,13 @@
 "use client";
 
 import { TriangleUpIcon } from "@radix-ui/react-icons";
-import { TFeedback, TFeedbackListItem } from "../../../lib/types/types";
+import { TFeedbackListItem } from "../../../lib/types/types";
 import { Error, Spinner } from "../../../lib/common.imports";
 import IsNullOrEmpty from "../../../lib/helper/helper";
 import { JUST_NOW_MESSAGE } from "../../../lib/constants/constants";
 import classNames from "classnames";
 import { useState } from "react";
-import { useFeedbackContext } from "../../../lib/hooks/useFeedbackContext";
+import { useFeedbackStore } from "../../../app/stores/feedbackStore";
 
 type TUpVoteButtonProps = {
     upvoteCount: number;
@@ -27,7 +27,9 @@ type TDatePosted = {
 };
 
 export default function FeedbackList() {
-    const { filteredItems, isLoading, errorMessage } = useFeedbackContext() as TFeedback;
+    const filteredItems = useFeedbackStore((state) => state.getFilteredItems());
+    const isLoading = useFeedbackStore((state) => state.isLoading);
+    const errorMessage = useFeedbackStore((state) => state.errorMessage);
 
     return (
         <ol className="feedback-list">
