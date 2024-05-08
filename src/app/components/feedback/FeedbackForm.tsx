@@ -4,12 +4,13 @@ import { ChangeEvent, useState } from "react";
 import { MAX_CHARACTERS } from "../../../lib/constants/constants";
 import classNames from "classnames";
 import IsNullOrEmpty from "../../../lib/helper/helper";
-import { useFeedbackContext } from "../../../lib/hooks/useFeedbackContext";
-import { TFeedback } from "../../../lib/types/types";
 
-export default function FeedbackForm() {
-    const { text, setText, handleAddItem } = useFeedbackContext() as TFeedback;
+type TFeedbackFormProps = {
+    onAddItem: (text: string) => Promise<void>;
+};
 
+export default function FeedbackForm({ onAddItem }: TFeedbackFormProps) {
+    const [text, setText] = useState("");
     const [showValidIndicator, setShowValidIndicator] = useState(false);
     const [showInvalidIndicator, setShowInvalidIndicator] = useState(false);
 
@@ -34,7 +35,7 @@ export default function FeedbackForm() {
             return;
         }
 
-        handleAddItem();
+        onAddItem(text);
 
         setShowValidIndicator(true);
         setTimeout(() => {
